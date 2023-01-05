@@ -6,6 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "makeseed": "npx knex seed:make seedify --knexfile \"./src/db/*.{ts,js}\"",
+    "migrate": "npx knex migrate:latest --knexfile \"./src/db/*.{ts,js}\"",
+    "seed": "npx knex seed:run --knexfile \"./src/db/*.{ts,js}\"",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
