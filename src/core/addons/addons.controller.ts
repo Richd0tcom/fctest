@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AddonsService } from './addons.service';
 import { CreateAddonDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
 
-@Controller('addons')
+@Controller('brands/:brandId')
 export class AddonsController {
   constructor(private readonly addonsService: AddonsService) {}
 
-  @Post()
-  create(@Body() createAddonDto: CreateAddonDto) {
-    return this.addonsService.create(createAddonDto);
+  @Post('addons')
+  create(
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Body() createAddonDto: CreateAddonDto,
+  ) {
+    return this.addonsService.create(brandId, createAddonDto);
   }
 
-  @Get()
-  findAll() {
-    return this.addonsService.findAll();
+  @Get('addons')
+  findAll(@Param('brandId', new ParseIntPipe()) brandId: number) {
+    return this.addonsService.findAllAddonsForSpecificBrand(brandId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.addonsService.findOne(+id);
+  @Get('addons/:addonId')
+  findOne(@Param('id') id: number) {
+    return this.addonsService.findAddonById(id, id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAddonDto: UpdateAddonDto) {
-    return this.addonsService.update(+id, updateAddonDto);
+  @Patch('addons/:addonId')
+  update(
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Param('addonId', new ParseIntPipe()) addonId: number,
+    @Body() updateAddonDto: UpdateAddonDto,
+  ) {
+    return this.addonsService.update(brandId, addonId, updateAddonDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.addonsService.remove(+id);
+  @Delete('addons/:addonId')
+  remove(
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Param('addonId', new ParseIntPipe()) addonId: number,
+  ) {
+    return this.addonsService.remove(brandId, addonId);
   }
 }
