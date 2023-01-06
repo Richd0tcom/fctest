@@ -1,26 +1,67 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAddonDto } from './dto/create-addon.dto';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { CreateAddonDto, createAddonCategoryDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
+import { Addon, AddonCategory } from './entities/addon.entity';
+import { ModelClass } from 'objection';
 
 @Injectable()
 export class AddonsService {
-  create(createAddonDto: CreateAddonDto) {
-    return 'This action adds a new addon';
+  constructor(
+    @Inject('Addon') private addonModel: ModelClass<Addon>,
+    @Inject('AddonCategory')
+    private addonCategoryModel: ModelClass<AddonCategory>,
+  ) {}
+  async create(brandId: number, createAddonDto: CreateAddonDto) {
+    const data = { brand_id: brandId, ...createAddonDto };
+    return await this.addonModel.query().insert(data).returning('*');
   }
 
-  findAll() {
-    return `This action returns all addons`;
+  async findAllAddonsForSpecificBrand(brandId: number) {
+    return await this.addonModel.query().where('brand_id', brandId);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} addon`;
+  async findAddonById(brandId: number, addonId: number) {
+    return await this.addonModel
+      .query()
+      .findById(addonId)
+      .where('brand_id', brandId);
   }
 
-  update(id: number, updateAddonDto: UpdateAddonDto) {
-    return `This action updates a #${id} addon`;
+  async update(
+    brandId: number,
+    addonId: number,
+    updateAddonDto: UpdateAddonDto,
+  ) {
+    return await this.addonModel
+      .query()
+      .patch(updateAddonDto)
+      .where('id', addonId)
+      .where('brand_id', brandId)
+      .returning('*');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} addon`;
+  async remove(brandId: number, addonId: number) {
+    try {
+      await this.addonModel
+        .query()
+        .delete()
+        .where('id', addonId)
+        .where('brand_id', brandId);
+
+      return {
+        status: 'success',
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  async createAddonCategory(brandId: number, dto: createAddonCategoryDto) {
+    const data = { brand_id: brandId, ...dto };
+    return await this.addonCategoryModel.query().insert(data).returning('*');
   }
 }
