@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AddonsModule } from './core/addons/addons.module';
 import { ConfigModule } from '@nestjs/config';
 import { DbModule } from './db/db.module';
+import { AuthModule } from './auth/auth.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -14,6 +15,7 @@ const ENV = process.env.NODE_ENV;
     }),
     DbModule,
     AddonsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
