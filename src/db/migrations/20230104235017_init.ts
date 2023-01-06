@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-import { Tables } from 'knex/types/tables';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema
