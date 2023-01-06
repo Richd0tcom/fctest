@@ -6,9 +6,9 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg',
     connection: {
-      database: 'foodcourt',
-      user: 'root',
-      password: 'Madara123',
+      database: process.env.DB_DATABASE,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
     },
     pool: {
       min: 2,
