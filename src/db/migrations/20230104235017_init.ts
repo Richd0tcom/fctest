@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-import { Tables } from 'knex/types/tables';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema
@@ -34,8 +33,7 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema
-    .dropTableIfExists('brands')
-    .dropTableIfExists('addons')
-    .dropTableIfExists('addon_categories');
+  await knex.raw('DROP TABLE "brands" CASCADE');
+  await knex.raw('DROP TABLE "addons" CASCADE');
+  return await knex.raw('DROP TABLE "addon_categories" CASCADE');
 }

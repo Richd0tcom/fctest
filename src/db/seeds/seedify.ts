@@ -15,7 +15,6 @@ export async function seed(knex: Knex): Promise<void> {
 
   await knex('addons').insert([
     {
-      id: 1,
       name: 'Grilled Chicken',
       description: 'Grilled chicken breast in a garden salad bed.',
       price: 7000,
@@ -23,7 +22,6 @@ export async function seed(knex: Knex): Promise<void> {
       brand_id: 1,
     },
     {
-      id: 2,
       name: 'Chicken Shawarma',
       description:
         'Chicken & mixed veg, drenched in special sauce & wrapped in toasted flat bread.',
@@ -32,7 +30,6 @@ export async function seed(knex: Knex): Promise<void> {
       brand_id: 1,
     },
     {
-      id: 3,
       name: 'Drinks, Wine & Liquor',
       description: 'Lets get the party started 🥂',
       price: 12000,
@@ -40,7 +37,6 @@ export async function seed(knex: Knex): Promise<void> {
       brand_id: 3,
     },
     {
-      id: 4,
       name: 'Snacks, Sweets & Munchies',
       description: 'A curation of all your faves. 🍬',
       price: 500,
@@ -48,7 +44,6 @@ export async function seed(knex: Knex): Promise<void> {
       brand_id: 3,
     },
     {
-      id: 5,
       name: 'OG Burger',
       description:
         'Premium beef patty with egg, sausage, lettuce & special sauce.',
@@ -57,7 +52,6 @@ export async function seed(knex: Knex): Promise<void> {
       brand_id: 2,
     },
     {
-      id: 6,
       name: 'Double Cheese Burger',
       description:
         'Double premium beef patty with cheese, tomatoes & lettuce in special sauce.',
