@@ -9,6 +9,7 @@ async function bootstrap() {
     credentials: true,
     origin: ['*'],
   });
-  await app.listen(2121);
+  const PORT = process.env.PORT || 2121;
+  await app.listen(PORT);
 }
 bootstrap();
