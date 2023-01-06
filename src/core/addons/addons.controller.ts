@@ -50,4 +50,12 @@ export class AddonsController {
   ) {
     return this.addonsService.remove(brandId, addonId);
   }
+
+  @Post('addon-categories')
+  createAddonCategory(
+    @Param('brandId', new ParseIntPipe()) brandId: number,
+    @Body() createAddonDto: CreateAddonDto,
+  ) {
+    return this.addonsService.createAddonCategory(brandId, createAddonDto);
+  }
 }

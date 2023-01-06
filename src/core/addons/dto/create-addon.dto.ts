@@ -38,3 +38,14 @@ export class CreateAddonDto {
   })
   category?: string;
 }
+
+export class createAddonCategoryDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: true,
+    description: 'The name of the addon category',
+  })
+  name: string;
+}

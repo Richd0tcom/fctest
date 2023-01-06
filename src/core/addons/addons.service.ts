@@ -3,14 +3,18 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { CreateAddonDto } from './dto/create-addon.dto';
+import { CreateAddonDto, createAddonCategoryDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
 import { Addon, AddonCategory } from './entities/addon.entity';
 import { ModelClass } from 'objection';
 
 @Injectable()
 export class AddonsService {
-  constructor(@Inject('Addon') private addonModel: ModelClass<Addon>) {}
+  constructor(
+    @Inject('Addon') private addonModel: ModelClass<Addon>,
+    @Inject('AddonCategory')
+    private addonCategoryModel: ModelClass<AddonCategory>,
+  ) {}
   async create(brandId: number, createAddonDto: CreateAddonDto) {
     const data = { brand_id: brandId, ...createAddonDto };
     return await this.addonModel.query().insert(data).returning('*');
@@ -54,5 +58,10 @@ export class AddonsService {
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
+  }
+
+  async createAddonCategory(brandId: number, dto: createAddonCategoryDto) {
+    const data = { brand_id: brandId, ...dto };
+    return await this.addonCategoryModel.query().insert(data).returning('*');
   }
 }
