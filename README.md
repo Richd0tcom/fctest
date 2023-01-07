@@ -1,73 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# FoodCourt addon API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Introduction
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is an API for a meal management application that allows users to create, read, update, and delete
+meal addons. [here](https://fctest-production.up.railway.app/api).
 
-## Description
+This api was developed using
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NodeJs (LTS version 18.3.0)
+- KnesJS ORM | ObjectionJS
+- PostgresSQL
+- NestJS | TypeScript
 
-## Installation
+## Getting Started
 
-```bash
-$ npm install
+### Prerequisites
+
+The tools listed below are needed to run this application locally:
+
+- Node (LTS Version)
+- Npm v8.3.1 or above
+- Docker (easier but optional) or PostgreSQL installed locally
+
+You can check the Node.js and npm versions by running the following commands.
+
+### Check node.js version
+
+`node -v`
+
+### Check npm version
+
+`npm -v`
+
+## Installation/setup
+
+- Install project dependencies by running `npm install`.
+
+- If you have docker installed and running, open a new terminal and run
+  ```shell
+    docker run --name postgres15 -p 5432:5432 -e POSTGRES_USER={{username}} -e POSTGRES_PASSWORD={{password}} -d postgres:15-alpine
+  ```
+  to spin a postgres container. Then run the following command to create a new database
+  ```shell
+    docker exec -it postgres15 createdb --username={{username}} --owner={{username}} foodcourt
+  ```
+- Incase you are NOT using docker, please ensure you have postgres up and running on port 5432 (or any port really) on your device and your connection details ( host, user, password etc), and ensure you ha
+- In the root directory of your project create a `.env` file and populate it with the following details:
+  ```env
+    JWT_SECRET=secretkey
+    DB_DATABASE=foodcourt
+    DB_HOST=localhost
+    DB_PASSWORD={{your postgres password (or the password value you provided if you used the docker approach)}}
+    DB_PORT=5432 or {{your configured postgres port }}
+    DB_USER={{you postgres user (or the username value you provided if you used the docker approach)}}
+  ```
+- Run `npm run start:dev` to start the development server and watch for changes.
+
+- Access endpoints on localhost:2121 using any api client of your choice (e.g Postman, Insominia etc).
+
+## Run migration
+
+This can be done before or after successfully starting the development server.
+
+- First, open a new terminal and navigate to your projects root directory.
+
+- Then run `npm run migrateup` to execute the database migrations.
+- For convinience, some seed data has been provided for database seeding. Run `npm run seed` to seed in some data to the database (follow ).
+
+# Database Diagram
+
+![Untitled](https://user-images.githubusercontent.com/86890896/211125401-b6af7c47-7644-45f1-9243-162e263ebb58.png)
+
+
+# REST API
+
+The REST API to the _food court app_ is described below.
+The base URL for local development is
+
+    http://localhost:2121/
+
+The base URL for the live version is
+
+    https://fctest-production.up.railway.app/
+
+POST `/brands/:brandId/addons`: Create a new meal addon for the specified brand. The request body should contain the following fields:
+
+- name: The name of the meal addon (string, required)
+- description: A description of the meal addon (string, optional)
+- price: The price of the meal addon (number, required)
+- category: The category of the meal addon (string, optional)
+
+GET `/brands/:brandId/addons`: Retrieve a list of all meal addons for the specified brand.
+
+GET `/brands/:brandId/addons/:addonId`: Retrieve a single meal addon by its ID for the specified brand.
+
+PATCH `/brands/:brandId/addons/:addonId`: Update a single meal addon by its ID for the specified brand. The request body should contain the following fields:
+
+- name: The updated name of the meal addon (string, optional)
+- description: The updated description of the meal addon (string, optional)
+- price: The updated price of the meal addon (number, optional)
+- category: The updated category of the meal addon (string, optional)
+- DELETE `/brands/:brandId/addons/:addonId`: Delete a single meal addon by its ID for the specified brand.
+
+POST `/brands/:brandId/addon-categories`: Create a new category for meal addons for the specified
+brand. The request body should contain the following field:
+
+- name: The name of the category (string, required)
+
+For convienience, 3 brands currently exist as part of the seed data
+
+```javascript
+    { id: 1, name: 'Wing Kings' },
+    { id: 2, name: 'Frankies' },
+    { id: 3, name: 'FC Shop' },
 ```
 
-## Running the app
+use any of these 3 brand id's when testing out the API.
 
-```bash
-# development
-$ npm run start
+## Authentication and Authorisation
 
-# watch mode
-$ npm run start:dev
+The api uses a Bearer authentication to ensure that only Admins can make the above requests. To get your admin Bearer token, make a `POST` request to `/auth` with the following request body
 
-# production mode
-$ npm run start:prod
+```json
+{
+  "username": "testuser"
+}
 ```
 
-## Test
+you should receive a response containing the access token like in the example below.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMDQyMjYxLCJleHAiOjE2NzMwNDU4NjF9.3j7njHBfaWvmvW9BFFIGgq1C6LHbE-1_gDGo7KD-Lnw"
+}
 ```
 
-## Support
+Ensure you pass the `Bearer <token you recieved>` in the `Authorisation` header when making your request else you will not be granted access to the resources.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Postman documentation
 
-## Stay in touch
+[Click here to get the postman documentation](https://documenter.getpostman.com/view/22009828/2s8Z75RUcz)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+#### Deployed Link
 
-Nest is [MIT licensed](LICENSE).
+You can [click here](https://fctest-production.up.railway.app/api) to test the api

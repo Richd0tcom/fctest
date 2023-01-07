@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { Role } from 'src/common/enums/roles.enum';
 
 @Injectable()
@@ -13,7 +15,7 @@ export class AuthService {
     },
   ];
 
-  async authenticate(user: any) {
+  async authenticate(user: AuthDto) {
     const usr = this.users.find((u) => u.username == user.username);
 
     if (!usr) {
@@ -26,4 +28,15 @@ export class AuthService {
       }),
     };
   }
+}
+
+export class AuthDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: true,
+    description: 'Username of Admin Test user',
+  })
+  username: string;
 }
