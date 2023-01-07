@@ -67,9 +67,10 @@ This can be done before or after successfully starting the development server.
 - Then run `npm run migrateup` to execute the database migrations.
 - For convinience, some seed data has been provided for database seeding. Run `npm run seed` to seed in some data to the database (follow ).
 
-# E-R Diagram
+# Database Diagram
 
-![alt text](https://github.com/MrOrero/lendsqr-api/blob/main/er-diagram.PNG?raw=true)
+![Untitled](https://user-images.githubusercontent.com/86890896/211125401-b6af7c47-7644-45f1-9243-162e263ebb58.png)
+
 
 # REST API
 
