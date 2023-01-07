@@ -10,13 +10,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AddonsService } from './addons.service';
-import { CreateAddonDto } from './dto/create-addon.dto';
+import { CreateAddonDto, createAddonCategoryDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/roles.enum';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Addons')
+@ApiBearerAuth('access-token')
 @Controller('brands/:brandId')
 export class AddonsController {
   constructor(private readonly addonsService: AddonsService) {}
@@ -71,7 +74,7 @@ export class AddonsController {
   @Post('addon-categories')
   createAddonCategory(
     @Param('brandId', new ParseIntPipe()) brandId: number,
-    @Body() createAddonDto: CreateAddonDto,
+    @Body() createAddonDto: createAddonCategoryDto,
   ) {
     return this.addonsService.createAddonCategory(brandId, createAddonDto);
   }
