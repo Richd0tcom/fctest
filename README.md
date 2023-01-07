@@ -131,7 +131,7 @@ you should receive a response containing the access token like in the example be
 
 ```json
 {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.      eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMDQyMjYxLCJleHAiOjE2NzMwNDU4NjF9.           3j7njHBfaWvmvW9BFFIGgq1C6LHbE-1_gDGo7KD-Lnw"
+"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMDQyMjYxLCJleHAiOjE2NzMwNDU4NjF9.3j7njHBfaWvmvW9BFFIGgq1C6LHbE-1_gDGo7KD-Lnw"
 }
 ```
 
