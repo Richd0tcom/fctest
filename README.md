@@ -90,7 +90,7 @@ POST `/brands/:brandId/addons`: Create a new meal addon for the specified brand.
 - price: The price of the meal addon (number, required)
 - category: The category of the meal addon (string, optional)
 
-GET /brands/:brandId/addons: Retrieve a list of all meal addons for the specified brand.
+GET `/brands/:brandId/addons`: Retrieve a list of all meal addons for the specified brand.
 
 GET `/brands/:brandId/addons/:addonId`: Retrieve a single meal addon by its ID for the specified brand.
 
@@ -109,7 +109,7 @@ brand. The request body should contain the following field:
 
 For convienience, 3 brands currently exist as part of the seed data
 
-```json
+```javascript
     { id: 1, name: 'Wing Kings' },
     { id: 2, name: 'Frankies' },
     { id: 3, name: 'FC Shop' },
