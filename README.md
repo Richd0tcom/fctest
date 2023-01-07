@@ -3,7 +3,7 @@
 ## Introduction
 
 This is an API for a meal management application that allows users to create, read, update, and delete
-meal addons. [here](https://fctest-production.up.railway.app/healthcheck).
+meal addons. [here](https://fctest-production.up.railway.app/api).
 
 This api was developed using
 
@@ -144,4 +144,4 @@ Ensure you pass the `Bearer <token you recieved>` in the `Authorisation` header 
 
 #### Deployed Link
 
-You can [click here](https://fctest-production.up.railway.app/healthcheck) to test the api
+You can [click here](https://fctest-production.up.railway.app/api) to test the api
